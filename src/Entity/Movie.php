@@ -47,6 +47,11 @@ class Movie
      */
     private float $rating = 0.0;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Genre::class)
+     */
+    private $genre;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -132,6 +137,18 @@ class Movie
     public function setRating(float $rating): self
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getGenre(): ?Genre
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?Genre $genre): self
+    {
+        $this->genre = $genre;
 
         return $this;
     }
