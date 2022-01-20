@@ -2,9 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Genre;
 use App\Entity\Movie;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use MongoDB\Driver\Manager;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,20 +23,75 @@ class MovieController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstrac
     /**
      * @Route("/movies/create", name="movies_create")
      */
-    public function create(ManagerRegistry $managerRegistry)
+    public function create(EntityManagerInterface $em, Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
         $movie = new Movie();
-        $movie->setTitle("Ava");
-        $movie->setOverview("A black ops assassin is forced to fight for her 
-        own survival after a job goes dangerously wrong.");
-        $movie->setReleaseDate(new DateTime("2020-09-25"));
+
+        // Una vegada creada la instància podem afegim valors per defecte
+        // en aquest cas la data i el poster
+        $movie->setReleaseDate(new DateTime());
         $movie->setPoster("noposter.jpg");
 
-        $entityManager->persist($movie);
-        $entityManager->flush();
-        return new Response("The movie with id " . $movie->getId().
-            " has been inserted successfully!" );
+        $form = $this->createFormBuilder($movie)
+            ->add('title', TextType::class)
+            ->add('overview', TextareaType::class)
+            ->add('releaseDate', DateType::class)
+            ->add('poster', TextType::class)
+            ->add('genre', EntityType::class, ['class' =>
+                Genre::class, 'choice_label' => 'name'])
+            ->add('create', SubmitType::class, array('label' => 'Create'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $movie = $form->getData();
+
+            $em->persist($movie);
+            $em->flush();
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('movie/create.html.twig', array(
+            'form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/movies/{id}/edit", name="movies_edit")
+     */
+    public function edit(int $id, Request $request, EntityManagerInterface $em)    {
+
+        $movieRepository = $em->getRepository(Movie::class);
+        $movie = $movieRepository->find($id);
+
+        $form = $this->createFormBuilder($movie)
+            ->add('id', HiddenType::class)
+            ->add('title', TextType::class)
+            ->add('tagline', TextType::class)
+            ->add('overview', TextareaType::class)
+            ->add('releaseDate', DateType::class,
+                ['widget' => "single_text"]
+            )
+            ->add('poster', TextType::class)
+            ->add('genre', EntityType::class,
+                ['class' => Genre::class,
+                    'choice_label' => 'name',
+                    'placeholder' => 'Select a genre',
+                ]
+            )
+            ->add('update', SubmitType::class, array('label' => 'Update'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $movie = $form->getData();
+            $em->persist($movie);
+            $em->flush();
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('movie/edit.html.twig', array(
+            'form' => $form->createView()));
     }
 
 }
