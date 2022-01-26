@@ -38,7 +38,6 @@ class Movie
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\Date()
      */
     private \DateTime $releaseDate;
 
