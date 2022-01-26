@@ -6,6 +6,9 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -16,9 +19,10 @@ use Doctrine\ORM\Mapping\Table;
  *          )
  *      }
  * )
+ * @UniqueEntity("username")
  */
 
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -59,10 +63,7 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
+
 
     public function setPassword(string $password): self
     {
@@ -81,5 +82,44 @@ class User
         $this->role = $role;
 
         return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRoles()
+    {
+
+        return [$this->getRole()];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSalt()
+    {
+
+        return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+       return $this->getUsername();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPassword():?string
+    {
+        return $this->password;
     }
 }
