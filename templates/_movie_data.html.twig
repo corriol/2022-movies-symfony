@@ -1,5 +1,5 @@
 <div class="card {{ col | default('col-3') }}" >
-    <img src="{{ asset('posters') ~ '/'~ movie.poster }}" class="card-img-top" alt="{{ movie.title }}">
+    <img src="{{ asset('images') ~ '/'~ movie.poster }}" class="card-img-top" alt="{{ movie.title }}">
     <div class="card-body">
         <h5 class="card-title">{{ movie.title }} </h5>
         <p class="card-text">{{ movie.overview }}</p>
