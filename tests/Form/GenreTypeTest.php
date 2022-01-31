@@ -12,7 +12,7 @@ class GenreTypeTest extends TypeTestCase
     {
         $formData = [
             'id' => 1,
-            'name' => 'test',
+            'name' => '',
         ];
 
         $model = new Genre();
@@ -21,7 +21,7 @@ class GenreTypeTest extends TypeTestCase
         $form = $this->factory->create(GenreType::class, $model);
 
         $expected = new Genre();
-        $expected->setName('test');
+        $expected->setName('');
         // ...populate $object properties with the data stored in $formData
 
         // submit the data to the form directly

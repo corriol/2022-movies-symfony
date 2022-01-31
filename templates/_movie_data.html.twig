@@ -1,10 +1,14 @@
-<div class="card {{ col | default('col-3') }}" >
-    <img src="{{ asset('images') ~ '/'~ movie.poster }}" class="card-img-top" alt="{{ movie.title }}">
+<div class="col">
+<div class="card" >
+
+        <img src="{{ asset('images') ~ '/'~ movie.poster }}" class="card-img-top" alt="{{ movie.title }}">
+
     <div class="card-body">
         <h5 class="card-title">{{ movie.title }} </h5>
-        <p class="card-text">{{ movie.overview }}</p>
-        <p><strong>Release date</strong>: {{ movie.releaseDate | date("Y-m-d") }}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <p class="card-text">{{ movie.overview | slice(0, 100) }}...</p>
+        <p><strong>Data d'estrena</strong>: {{ movie.releaseDate | date("d-m-Y") }}</p>
+        <a href="#" class="btn btn-primary">Més detalls</a>
     </div>
 </div>
 
+</div>

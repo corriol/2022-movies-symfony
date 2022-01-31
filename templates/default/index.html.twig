@@ -3,10 +3,36 @@
 {% block title %}Hello DefaultController!{% endblock %}
 
 {% block body %}
-
-    <h1>Movies</h1>
+<h1>
+    Benvingut a Movies!
+</h1>
+    <div class="row">
+        <div class="col-12">
+            <form class="row g-1  my-4">
+                <div class="col-2"></div>
+                <div class="col-7">
+                    <input class="form-control" type="text" placeholder="Buscar pel·lícula" aria-label="Search">
+                </div>
+                <div class="col-1">
+                    <button class="form-control btn btn-secondary" type="submit">Buscar</button>
+                </div>
+                <div class="col-2"></div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <h3>Gèneres</h3>
+            <ul class="list-group">
+                {% for genre in genres %}
+                    <li class="list-group-item"><a href="">{{genre.name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-9">
+    <h3>Novetats</h3>
     {% if movies %}
-        <div class="row">
+        <div class="row row-cols-4">
         {% for movie in movies %}
            {{  include ('_movie_data.html.twig') }}
         {% endfor %}
@@ -14,6 +40,7 @@
     {% else %}
         <p>No movies found</p>
     {% endif %}
-
+        </div>
+    </div>
 
 {% endblock %}
