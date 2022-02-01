@@ -1,5 +1,24 @@
-FROM php:7.4.23-apache
+FROM php:7.4.27-apache
 RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+RUN echo "deb-src http://deb.debian.org/debian bullseye main" > /etc/apt/sources.list.d/extra.list
+
+RUN apt-get update -y && apt-get install -y libpng-dev
+
+RUN apt-get update && \
+    apt-get install -y \
+        zlib1g-dev \
+        libjpeg-dev \
+        libfreetype6-dev
+
+
+#RUN docker-php-ext-install gd
+#RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd
+
+
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 # change document root directory
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public

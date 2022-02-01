@@ -19,3 +19,7 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 /public/images/
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
