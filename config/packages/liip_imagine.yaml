@@ -9,7 +9,7 @@ liip_imagine:
             # use the default web path
             web_path: 
                 web_root: '%kernel.project_dir%/public' 
-                cache_prefix:  '%app_path_posters_thumbnails%'
+                cache_prefix: '%app.posters.thumbnails_dir%'
 
         # your filter sets are defined here
     filter_sets:
