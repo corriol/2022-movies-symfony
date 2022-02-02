@@ -10,16 +10,19 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class AppFixtures extends Fixture
 {
     private UserPasswordHasherInterface $hasher;
     private Generator $faker;
+    private ParameterBagInterface $parameterBag; 
 
-    public function __construct(UserPasswordHasherInterface $hasher)
+    public function __construct(UserPasswordHasherInterface $hasher, ParameterBagInterface $parameterBag)
     {
         $this->hasher = $hasher;
         $this->faker = Factory::create();
+        $this->parameterBag = $parameterBag;
     }
 
     public function load(ObjectManager $manager): void
@@ -83,7 +86,8 @@ class AppFixtures extends Fixture
             $movie->setTitle(ucwords($this->faker->words(3, true)));
             $movie->setOverview($this->faker->text(500));
             $movie->setReleaseDate($this->faker->dateTime);
-            $movie->setPoster($this->faker->file('assets', 'public/images', false));
+            $movie->setPoster($this->faker->file('assets', 'public/'. 
+                $this->parameterBag->get('app_path_posters'), false));
             $movie->setGenre($genres[\array_rand($genres)]);
             $movie->setUser($users[\array_rand($users)]);
             $manager->persist($movie);
