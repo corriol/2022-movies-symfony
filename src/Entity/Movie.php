@@ -4,10 +4,14 @@ namespace App\Entity;
 
 use App\Repository\MovieRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
+ * @Vich\Uploadable
  */
 class Movie
 {
@@ -30,6 +34,35 @@ class Movie
      */
     private $poster;
 
+
+    /**
+     * @Vich\UploadableField(mapping="movies_poster", fileNameProperty="poster")
+     * @var File
+     */
+    private $posterFile;
+
+    /**
+     * @return File
+     */
+    public function getPosterFile(): ?File
+    {
+        return $this->posterFile;
+    }
+
+        // ...
+
+    public function setPosterFile(File $image = null)
+    {
+        $this->posterFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTimeImmutable('now');
+        }
+    }
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(min=10, max = 1000)
@@ -63,6 +96,11 @@ class Movie
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $updatedAt;
 
     public function getId(): ?int
     {
@@ -173,6 +211,18 @@ class Movie
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
