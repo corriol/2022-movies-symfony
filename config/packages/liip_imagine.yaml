@@ -7,13 +7,18 @@ liip_imagine:
         # setup the default resolver
         default:
             # use the default web path
-            web_path: ~
+            web_path: 
+                web_root: '%kernel.project_dir%/public' 
+                cache_prefix: '%app.posters.thumbnails_dir%'
 
         # your filter sets are defined here
     filter_sets:
 
         # the name of the "filter set"
         my_thumb:
+            
+            # tot i no ser necessari ho vinculem a la cache per defecte.
+            cache: default
 
             # adjust the image quality to 75%
             quality: 75
@@ -28,5 +33,6 @@ liip_imagine:
                 # create a 2px black border: center the thumbnail on a black background
                 # 4px larger to create a 2px border around the final image
                 background: { size: [ 300, 450 ], position: center, color: '#000000' }
+    
     # use the default cache configuration
     cache: ~

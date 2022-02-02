@@ -16,7 +16,10 @@ rebuild:
 
 	@ echo "Esborrant i creant el directori si no existeix.."
 	-rm -rf public/images
-	-mkdir public/images
+	-mkdir -p public/images/posters
+	 chmod 777 -R public/images
+
+
 
 	@ echo "Carregant les dades..."
 	$(PHP_CMD) bin/console doctrine:fixtures:load -n
