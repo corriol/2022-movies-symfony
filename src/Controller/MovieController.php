@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Genre;
 use App\Entity\Movie;
+use App\Entity\Rating;
+use App\Form\RatingType;
+use App\Repository\RatingRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -91,6 +94,56 @@ class MovieController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstrac
 
         return $this->render('movie/edit.html.twig', array(
             'form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/movies/{id}", name="movies_show", requirements={"id"="\d+"})
+     */
+    public function show(Movie $movie, Request $request, RatingRepository $ratingRepository, EntityManagerInterface $em)
+    {
+        $user = $this->getUser();
+
+        // busquem si l'usuari ja ha valorat la pel·lícula
+        $rating = $ratingRepository->findOneBy(["movie"=>$movie, "user"=>$user]);
+
+        // si no creem el rating
+        if (empty($rating)) {
+            $rating = new Rating();
+            $rating->setMovie($movie);
+            $rating->setUser($user);
+        } else
+            $oldValue = $rating->getValue();
+
+
+        $form = $this->createForm(RatingType::class, $rating);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($rating);
+
+            // Si es una votació nova
+            if ($rating->getId() === null) {
+                $newRating = ($movie->getRating() * $movie->getVoters() + $rating->getValue()) / ($movie->getVoters() + 1);
+                $movie->setVoters($movie->getVoters() + 1);
+            } else {
+                $newRating = ($movie->getRating() * $movie->getVoters() + $rating->getValue() - $oldValue)/($movie->getVoters());
+            }
+
+            $movie->setRating($newRating);
+            $em->flush();
+
+            $this->addFlash('success', 'La teua valoració s\'ha guardat!');
+        }
+
+        if ($movie) {
+            return $this->render('movie/show.html.twig',
+                [
+                    'movie' => $movie,
+                    'form' => $form->createView()
+                ]
+            );
+        }
     }
 
 }

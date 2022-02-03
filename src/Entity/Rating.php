@@ -28,13 +28,13 @@ class Rating
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ratings")
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="ratings")
+     * @ORM\ManyToOne(targetEntity=Movie::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $movie;

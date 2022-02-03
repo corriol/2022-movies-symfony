@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Rating;
+use App\Form\RatingType;
 use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,9 +25,18 @@ class DefaultController extends AbstractController
         // obtinc els generes per ordre alfabètic
         $genres = $genreRepository->findBy([], ["name"=>"ASC"]);
 
+        $rating = new Rating();
+
+        //*$rating->setMovie($movie[0]);
+        //*$rating->setUser($user);*/
+
+
+//        $form = $this->createForm(RatingType::class, $rating);
+
         return $this->render('default/index.html.twig', [
             'movies' => $movies,
-            'genres' => $genres
+            'genres' => $genres,
+  //          'rateForm' => $form->createView()
         ]);
     }
 }

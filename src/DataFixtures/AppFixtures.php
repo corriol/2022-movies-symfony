@@ -92,7 +92,7 @@ class AppFixtures extends Fixture
             $movie->setOverview($this->faker->text(500));
             $movie->setReleaseDate($this->faker->dateTime);
             $movie->setPoster($this->faker->picture('public/'.
-                $this->parameterBag->get('app.posters.dir'), 300, 600, false, false, 0));
+                $this->parameterBag->get('app.posters.dir'), 300, 450, false, false, 0));
             //$movie->setPoster($this->faker->file('assets', 'public/'.
 //                $this->parameterBag->get('app.posters.dir'), false));
             $movie->setGenre($genres[\array_rand($genres)]);

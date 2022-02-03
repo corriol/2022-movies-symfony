@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movie{% endblock %}
+
+{% block body %}
+<div class="container my-3">
+    <div class="card m-0">
+        <div class="row no-gutters">
+            <div class="col-4">
+                <img src="{{ asset( posters_dir  ~ '/'~ movie.poster) }}"
+                     class="card-img-top" alt="{{ movie.title }}">
+            </div>
+            <div class="col-8 card-body">
+                <h1 class="card-title"><a href="{{ path('movies_show', {"id": movie.id}) }}">{{ movie.title }}</a></h1>
+                <p class="card-text">{{ movie.overview  }}...</p>
+                <p><strong>Data d'estrena</strong>: {{ movie.releaseDate | date("d-m-Y") }}</p>
+                <p class="text-muted">Valoració: {{ movie.rating | number_format(2) }}</p>
+                <p><strong>Usuari</strong>: {{ movie.user.username }}</p>
+                {% if app.user %}
+                    {{ form_start(form, {attr: {class: 'row row-cols-auto'}}) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-primary">Valora!</button>
+                    {{ form_end(form) }}
+
+                    {% if app.user.role == 'ROLE_EDITOR' %}
+                        <a href="{{ path('a_movie_edit', {id: movie.id}) }}" class="btn btn-primary">editar</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
