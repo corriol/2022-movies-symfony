@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc896f4b7d0af2d6372c8d43d8b79658",
+    "content-hash": "64390a59d0730c726b5c845ac4631412",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -10509,6 +10509,50 @@
                 }
             ],
             "time": "2021-07-28T10:34:58+00:00"
+        },
+        {
+            "name": "woodsandwalker/faker-picture",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/woodsandwalker/Faker-Picture.git",
+                "reference": "ae9d4afae4ac27ffccfcfe2fda11b84f3ddb56dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/woodsandwalker/Faker-Picture/zipball/ae9d4afae4ac27ffccfcfe2fda11b84f3ddb56dd",
+                "reference": "ae9d4afae4ac27ffccfcfe2fda11b84f3ddb56dd",
+                "shasum": ""
+            },
+            "require": {
+                "fakerphp/faker": "^1.12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WW\\Faker\\": "src/Faker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Walker",
+                    "homepage": "https://woodsandwalker.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A provider for FakerPHP to generate images from https://picsum.photos.",
+            "keywords": [
+                "faker"
+            ],
+            "support": {
+                "issues": "https://github.com/woodsandwalker/Faker-Picture/issues",
+                "source": "https://github.com/woodsandwalker/Faker-Picture/tree/v1.0.0"
+            },
+            "time": "2020-12-03T15:58:48+00:00"
         }
     ],
     "aliases": [],

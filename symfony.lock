@@ -652,5 +652,8 @@
     },
     "webmozart/assert": {
         "version": "1.10.0"
+    },
+    "woodsandwalker/faker-picture": {
+        "version": "v1.0.0"
     }
 }

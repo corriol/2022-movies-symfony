@@ -11,6 +11,8 @@ use Faker\Factory;
 use Faker\Generator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use WW\Faker\Provider\Picture;
+
 
 class AppFixtures extends Fixture
 {
@@ -22,7 +24,9 @@ class AppFixtures extends Fixture
     {
         $this->hasher = $hasher;
         $this->faker = Factory::create();
+        $this->faker->addProvider(new Picture($this->faker));
         $this->parameterBag = $parameterBag;
+
     }
 
     public function load(ObjectManager $manager): void
@@ -83,11 +87,14 @@ class AppFixtures extends Fixture
         // Pel·lícules
         for ($i=0; $i<14; $i++ ) {
             $movie = new Movie();
-            $movie->setTitle(ucwords($this->faker->words(3, true)));
+            $title = ucwords($this->faker->words(3, true));
+            $movie->setTitle($title);
             $movie->setOverview($this->faker->text(500));
             $movie->setReleaseDate($this->faker->dateTime);
-            $movie->setPoster($this->faker->file('assets', 'public/'. 
-                $this->parameterBag->get('app.posters.dir'), false));
+            $movie->setPoster($this->faker->picture('public/'.
+                $this->parameterBag->get('app.posters.dir'), 300, 600, false, false, 0));
+            //$movie->setPoster($this->faker->file('assets', 'public/'.
+//                $this->parameterBag->get('app.posters.dir'), false));
             $movie->setGenre($genres[\array_rand($genres)]);
             $movie->setUser($users[\array_rand($users)]);
             $manager->persist($movie);
