@@ -25,6 +25,11 @@
                     {% if app.user.role == 'ROLE_EDITOR' %}
                         <a href="{{ path('a_movie_edit', {id: movie.id}) }}" class="btn btn-primary">editar</a>
                     {% endif %}
+
+            
+                    {{ dump(app.user.ratings) }}
+            
+
                 {% endif %}
             </div>
         </div>
