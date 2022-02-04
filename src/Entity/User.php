@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\Table;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Translation\Util\ArrayConverter;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -53,9 +54,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $movies;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Rating::class, mappedBy="user", fetch="EAGER")
+     */    
+    private $ratings;
+
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,6 +165,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($movie->getUser() === $this) {
                 $movie->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rating[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRatings(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getUser() === $this) {
+                $rating->setUser(null);
             }
         }
 

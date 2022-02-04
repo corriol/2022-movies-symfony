@@ -103,6 +103,9 @@ class MovieController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstrac
     {
         $user = $this->getUser();
 
+        dump($user->getRatings());
+        dump($user->getMovies());
+
         // busquem si l'usuari ja ha valorat la pel·lícula
         $rating = $ratingRepository->findOneBy(["movie"=>$movie, "user"=>$user]);
 
@@ -120,7 +123,7 @@ class MovieController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstrac
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($rating);
+
 
             // Si es una votació nova
             if ($rating->getId() === null) {
@@ -131,6 +134,10 @@ class MovieController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstrac
             }
 
             $movie->setRating($newRating);
+            
+            $em->persist($movie);
+            $em->persist($rating);
+
             $em->flush();
 
             $this->addFlash('success', 'La teua valoració s\'ha guardat!');
