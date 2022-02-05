@@ -39,4 +39,12 @@ class DefaultController extends AbstractController
   //          'rateForm' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/react", name="home_react")
+     */
+    public function react(MovieRepository $movieRepository, GenreRepository $genreRepository): Response
+    {
+        return $this->render('default/react.html.twig');
+    }
 }

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('prova') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('prova') }}
+{% endblock %}
+
+{% block title %}Hello DefaultController!{% endblock %}
+
+{% block body %}
+    <div id="root">
+
+    </div>
+
+{% endblock %}
