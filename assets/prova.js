@@ -38,9 +38,37 @@ class Welcome extends React.Component {
 
 const shopping = <ShoppingList name="Mark" />;
 
-ReactDOM.render(
+/* ReactDOM.render(
     shopping,
     document.getElementById('root')
+); */
+
+
+const movie = React.createElement(
+    'h3',
+    {className: 'greeting'},
+    'Hello, world!'
 );
 
-// Example usage: <ShoppingList name="Mark" />
+class StarRating extends React.Component {
+
+    render() {
+        //let movies = this.select();
+        //for (let i=0; i< movies.length; i=i+1) {
+         //   let moviesDiv = movies[i];
+        return movie;
+
+    }
+}
+
+document.addEventListener('DOMContentLoaded',
+    function (e) {
+        let movies = document.querySelectorAll('.movie');
+        for (let i=0; i< movies.length; i=i+1) {
+            let movie = movies[i];
+            ReactDOM.render(
+                <StarRating />,
+                movie.appendChild(document.createElement('div')));
+        }
+    }
+)

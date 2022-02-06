@@ -17,4 +17,14 @@
 
     </div>
 
+    <h3>Novetats</h3>
+    {% if movies %}
+        <div class="row row-cols-4">
+            {% for movie in movies %}
+                {{  include ('_movie_data.html.twig') }}
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No movies found</p>
+    {% endif %}
 {% endblock %}

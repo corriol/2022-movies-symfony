@@ -45,6 +45,9 @@ class DefaultController extends AbstractController
      */
     public function react(MovieRepository $movieRepository, GenreRepository $genreRepository): Response
     {
-        return $this->render('default/react.html.twig');
+        $movies = $movieRepository->findAll();
+
+        return $this->render('default/react.html.twig',
+        ['movies'=>$movies]);
     }
 }
