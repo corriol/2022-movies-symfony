@@ -1,4 +1,10 @@
-let React = require('react');
+const {useState} = require("react");
+const React = require("react");
+const { Rating } = require('react-simple-star-rating');
+//const Rating = require('react-simple-star-rating');
+let ReactDOM = require('react-dom');
+
+
 
 class ShoppingList extends React.Component {
     render() {
@@ -15,7 +21,7 @@ class ShoppingList extends React.Component {
     }
 }
 
-let ReactDOM = require('react-dom');
+
 
 const element = React.createElement(
     'h1',
@@ -51,12 +57,28 @@ const movie = React.createElement(
 );
 
 class StarRating extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {rating: 0};
+    }
+
+    handleRating(rating) {
+        this.setState({rating: rating})
+    }
+
+    componentDidMount() {
+        // comprovem si ha votat l'usuari i quina és la seua valoració
+    }
 
     render() {
+        // Catch Rating value
+
         //let movies = this.select();
         //for (let i=0; i< movies.length; i=i+1) {
          //   let moviesDiv = movies[i];
-        return movie;
+        return <div className="card-footer"><Rating/></div>;
+        //return <h1>Hello, {this.props.movie}</h1>;
+        //return <Rating onClick={this.handleRating} ratingValue={this.state.rating} /* Available Props */ />;
 
     }
 }
@@ -64,11 +86,14 @@ class StarRating extends React.Component {
 document.addEventListener('DOMContentLoaded',
     function (e) {
         let movies = document.querySelectorAll('.movie');
+
         for (let i=0; i< movies.length; i=i+1) {
             let movie = movies[i];
-            ReactDOM.render(
-                <StarRating />,
-                movie.appendChild(document.createElement('div')));
+//            console.log(movie.dataset);
+//            ReactDOM.render(
+//                <StarRating movie={movie.dataset.movieId} />,
+//                movie.appendChild(document.createElement('div')));
+            ReactDOM.render(<StarRating movie={movie.dataset.movieId} />, movie.appendChild(document.createElement('div')));
         }
     }
 )

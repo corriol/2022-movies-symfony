@@ -1,13 +1,12 @@
-<div class="col">
-<div class="card movie" data-movie-id="{{ movie.id }}">
-
+<div class="col mb-2">
+<div class="card movie h-100" data-movie-id="{{ movie.id }}">
         <img src="{{ asset( posters_dir  ~ '/'~ movie.poster) | imagine_filter('my_thumb') }}" class="card-img-top" alt="{{ movie.title }}">
 
     <div class="card-body">
         <h5 class="card-title"><a href="{{ path('movies_show', {"id": movie.id}) }}">{{ movie.title }}</a></h5>
-        <p class="card-text">{{ movie.overview | slice(0, 100) }}...</p>
+        <p class="card-text h-auto">{{ movie.overview | slice(0, 95) }}...</p>
         <p><strong>Data d'estrena</strong>: {{ movie.releaseDate | date("d-m-Y") }}</p>
-        <p><strong>Data d'estrena</strong>: {{ movie.rating | number_format(2) }}</p>
+        <p><strong>Valoració</strong>: {{ movie.rating | number_format(2) }}</p>
         <p><strong>Usuari</strong>: {{ movie.user.username }}</p>
 
         {% if app.user %}
