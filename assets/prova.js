@@ -56,30 +56,29 @@ const movie = React.createElement(
     'Hello, world!'
 );
 
+// ES6 React.Component doesn't auto bind methods to itself. You need to bind them yourself in constructor.
+// https://stackoverflow.com/questions/33973648/react-this-is-undefined-inside-a-component-function
+
 class StarRating extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {rating: 0};
     }
 
-    handleRating(rating) {
+    handleRating(rating ) {
+        // quan canvia el rating caldrà guardar les dades
         this.setState({rating: rating})
     }
 
     componentDidMount() {
-        // comprovem si ha votat l'usuari i quina és la seua valoració
+        // quan es munten els components caldrà actualitzar les dades amb la .
+        //console.log(this);
+        this.setState({rating: Math.random() * 100});
     }
 
     render() {
-        // Catch Rating value
-
-        //let movies = this.select();
-        //for (let i=0; i< movies.length; i=i+1) {
-         //   let moviesDiv = movies[i];
-        return <div className="card-footer"><Rating/></div>;
-        //return <h1>Hello, {this.props.movie}</h1>;
-        //return <Rating onClick={this.handleRating} ratingValue={this.state.rating} /* Available Props */ />;
-
+        return <div className="card-footer"><Rating onClick={() => this.handleRating()} ratingValue={this.state.rating}/></div>;
     }
 }
 
