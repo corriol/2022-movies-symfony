@@ -1,5 +1,5 @@
 <div class="col mb-2">
-<div class="card movie h-100" data-movie-id="{{ movie.id }}">
+<div class="card movie h-100" data-movie-id="{{ movie.id }}" data-user-id="{{ app.user.id ?? 0  }}">
         <img src="{{ asset( posters_dir  ~ '/'~ movie.poster) | imagine_filter('my_thumb') }}" class="card-img-top" alt="{{ movie.title }}">
 
     <div class="card-body">
