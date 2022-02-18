@@ -15,9 +15,10 @@ class StarRating extends React.Component {
         this.state = {rating: 0};
     }
 
-    handleRating() {
-        let jsonRating = { value: Math.random()*100, movie: this.props.movie, user: this.props.user};
-        fetch('http://movies-symfony/api/rating', {method: 'POST',
+    handleRating(rate) {
+
+        let jsonRating = { value: rate, movie: this.props.movie, user: this.props.user};
+        fetch('/api/rating', {method: 'POST',
             body: JSON.stringify(jsonRating)}) // 1
             .then(response => response.json()) // 2
             .then(data=> {
@@ -34,7 +35,7 @@ class StarRating extends React.Component {
         let movie = this.props.movie;
         let user = this.props.user;
 
-        fetch('http://movies-symfony/api/rating/' + movie + '/' + user) // 1
+        fetch('/api/rating/' + movie + '/' + user) // 1
             .then(response => response.json()) // 2
             .then(data=> {
                 console.log(data.value);
@@ -43,7 +44,7 @@ class StarRating extends React.Component {
     }
 
     render() {
-        return <div className="card-footer"><Rating onClick={() => this.handleRating()} ratingValue={this.state.rating}/></div>;
+        return <div className="card-footer"><Rating onClick={(rate) => this.handleRating(rate)} ratingValue={this.state.rating}/></div>;
     }
 }
 
