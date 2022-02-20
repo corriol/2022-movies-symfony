@@ -10,7 +10,6 @@
         "ext-json": "*",
         "ext-gd": "*",
         "ext-mbstring": "*",
-        "ext-zend opcache": "*",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.5",
         "doctrine/doctrine-migrations-bundle": "^3.2",
