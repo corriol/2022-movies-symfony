@@ -7,15 +7,18 @@ use App\Form\RatingType;
 use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\UX\Cropperjs\Factory\CropperInterface;
+use Symfony\UX\Cropperjs\Form\CropperType;
 
 class DefaultController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(MovieRepository $movieRepository, GenreRepository $genreRepository): Response
+    public function index(Request $request, MovieRepository $movieRepository, GenreRepository $genreRepository, CropperInterface $cropper): Response
     {
         $movies = $movieRepository->findAll();
 
@@ -27,16 +30,10 @@ class DefaultController extends AbstractController
 
         $rating = new Rating();
 
-        //*$rating->setMovie($movie[0]);
-        //*$rating->setUser($user);*/
-
-
-//        $form = $this->createForm(RatingType::class, $rating);
 
         return $this->render('default/index.html.twig', [
             'movies' => $movies,
-            'genres' => $genres,
-  //          'rateForm' => $form->createView()
+            'genres' => $genres
         ]);
     }
 

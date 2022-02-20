@@ -8,12 +8,16 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\Cropperjs\Factory\CropperInterface;
+use Symfony\UX\Cropperjs\Form\CropperType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class MovieType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
             ->add('title')
             ->add('poster')
