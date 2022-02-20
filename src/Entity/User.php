@@ -15,9 +15,9 @@ use Symfony\Component\Translation\Util\ArrayConverter;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @Table(name="user",
+ * @Table(name="uzer",
  *      uniqueConstraints={
- *          @UniqueConstraint(name="IDX_USERNAME",
+ *          @UniqueConstraint(name="IDX_USERNAME_2",
  *                  columns={"username"}
  *          )
  *      }

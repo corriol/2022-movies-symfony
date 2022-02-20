@@ -1,5 +1,15 @@
 FROM php:7.4.27-apache
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+
+RUN apt-get update
+
+# Install Postgre PDO
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
+
+
+RUN docker-php-ext-install mysqli pdo_mysql
 
 RUN echo "deb-src http://deb.debian.org/debian bullseye main" > /etc/apt/sources.list.d/extra.list
 
