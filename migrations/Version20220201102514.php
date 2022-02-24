@@ -21,7 +21,7 @@ final class Version20220201102514 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE movie ADD user_id INT NOT NULL');
-        $this->addSql('ALTER TABLE movie ADD CONSTRAINT FK_1D5EF26FA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE movie ADD CONSTRAINT FK_1D5EF26FA76ED395 FOREIGN KEY (user_id) REFERENCES uzer (id)');
         $this->addSql('CREATE INDEX IDX_1D5EF26FA76ED395 ON movie (user_id)');
     }
 
