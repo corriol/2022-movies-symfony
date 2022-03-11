@@ -6,6 +6,7 @@ use App\Entity\Movie;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,12 +29,15 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/new", name="a_movie_new", methods={"GET", "POST"})
+     * @IsGranted("ROLE_EDITOR")
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $movie = new Movie();
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
+
+        $movie->setUser($this->getUser());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($movie);

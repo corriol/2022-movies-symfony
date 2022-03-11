@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Presta\ImageBundle\Form\Type\ImageType;
 
 class MovieType extends AbstractType
 {
@@ -18,21 +19,12 @@ class MovieType extends AbstractType
 
         $builder
             ->add('title')
-            ->add('poster')
             ->add('overview')
             ->add('releaseDate')
             ->add('voters')
             ->add('rating')
-            ->add('posterFile', VichImageType::class, [
-                'required' => false,
-                'allow_delete' => true,
-                'delete_label' => '...',
-                'download_label' => '...',
-                'download_uri' => true,
-                'image_uri' => true,
-                'imagine_pattern' => 'my_thumb',
-                'asset_helper' => true,
-            ])
+            ->add('posterFile', ImageType::class,
+                ["max_width" => 180*2, "max_height"=>320*2])
             ->add('genre', EntityType::class,
                 ['class' => Genre::class,
                     'choice_label' => 'name',
@@ -46,4 +38,14 @@ class MovieType extends AbstractType
             'data_class' => Movie::class,
         ]);
     }
+/*[
+'required' => false,
+'allow_delete' => true,
+'delete_label' => '...',
+'download_label' => '...',
+'download_uri' => true,
+'image_uri' => true,
+'imagine_pattern' => 'my_thumb',
+'asset_helper' => true,
+]*/
 }

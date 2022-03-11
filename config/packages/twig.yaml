@@ -1,6 +1,13 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
 
+    globals:
+        posters_dir: '%app.posters.dir%'
+
+    form_themes:
+        - 'bootstrap_5_layout.html.twig'
+        - "@PrestaImage/form/bootstrap_5.html.twig"
+
 when@test:
     twig:
         strict_variables: true

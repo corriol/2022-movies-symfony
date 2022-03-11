@@ -10,15 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\UX\Cropperjs\Factory\CropperInterface;
-use Symfony\UX\Cropperjs\Form\CropperType;
+
 
 class DefaultController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, MovieRepository $movieRepository, GenreRepository $genreRepository, CropperInterface $cropper): Response
+    public function index(Request $request, MovieRepository $movieRepository, GenreRepository $genreRepository): Response
     {
         $movies = $movieRepository->findAll();
 

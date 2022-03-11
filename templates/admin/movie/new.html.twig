@@ -2,6 +2,13 @@
 
 {% block title %}New Movie{% endblock %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags('cropper') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('cropper') }}
+{% endblock %}
 {% block body %}
     <h1>Create new Movie</h1>
 
